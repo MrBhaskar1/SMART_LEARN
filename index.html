@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -68,10 +67,19 @@
 
             <div class="game-card" onclick="openGame('math')">
                 <div class="game-icon">🔢</div>
-                <h3>Math Challenge</h3>
+                <h3>Number Learning</h3>
                 <p>Learn Numbers and Mathematics</p>
                 <button>Play Now</button>
             </div>
+
+
+            <div class="game-card" onclick="openGame('challenge')">
+                <div class="game-icon">🧮</div>
+                <h3>Math Challenge</h3>
+                <p>Solve Maths Questions and Earn Rewards</p>
+                <button>Play Now</button>
+            </div>
+
 
             <div class="game-card" onclick="openGame('quiz')">
                 <div class="game-icon">🧠</div>
@@ -91,71 +99,117 @@
 
     </section>
 
-<!-- ABC LEARNING GAME -->
+    <!-- ABC LEARNING GAME -->
 
-<section class="abc-game" id="abcGame" style="display:none;">
+    <section class="abc-game" id="abcGame" style="display:none;">
 
-    <h2>🔤 ABC Learning Adventure</h2>
+        <h2>🔤 ABC Learning Adventure</h2>
 
-    <div class="abc-box">
+        <div class="abc-box">
 
-        <div class="letter" id="letter">A</div>
+            <div class="letter" id="letter">A</div>
 
-        <h3 id="word">A for Apple 🍎</h3>
+            <h3 id="word">A for Apple 🍎</h3>
 
-        <button onclick="speakLetter()">🔊 Listen</button>
+            <button onclick="speakLetter()">🔊 Listen</button>
 
-        <div class="abc-controls">
-            <button onclick="previousLetter()">⬅ Previous</button>
-            <button onclick="nextLetter()">Next ➡</button>
+            <div class="abc-controls">
+                <button onclick="previousLetter()">⬅ Previous</button>
+                <button onclick="nextLetter()">Next ➡</button>
+            </div>
+
+            <p id="abcProgress">Letter 1 of 26</p>
+
         </div>
 
-        <p id="abcProgress">Letter 1 of 26</p>
+        <div class="quiz-area">
 
-    </div>
+            <h3>🎯 Find the Correct Picture</h3>
 
-<div class="quiz-area">
+            <p id="quizQuestion">Which picture starts with A?</p>
 
-    <h3>🎯 Find the Correct Picture</h3>
+            <div class="quiz-options" id="quizOptions"></div>
 
-    <p id="quizQuestion">Which picture starts with A?</p>
+            <p id="quizFeedback"></p>
 
-    <div class="quiz-options" id="quizOptions"></div>
+            <p>🪙 Coins: <span id="coinScore">0</span></p>
 
-    <p id="quizFeedback"></p>
-
-    <p>🪙 Coins: <span id="coinScore">0</span></p>
-
-</div>
-
-</section>
-
-<!-- NUMBER LEARNING GAME -->
-
-<section class="number-game" id="numberGame" style="display:none;">
-
-    <h2>🔢 Number Learning Adventure</h2>
-
-    <div class="number-box">
-
-        <div class="big-number" id="numberDisplay">1</div>
-
-        <h3 id="numberWord">One</h3>
-
-        <p id="numberHint">Count and Learn!</p>
-
-        <button onclick="speakNumber()">🔊 Listen</button>
-
-        <div class="number-controls">
-            <button onclick="previousNumber()">⬅ Previous</button>
-            <button onclick="nextNumber()">Next ➡</button>
         </div>
 
-        <p id="numberProgress">Number 1 of 20</p>
+    </section>
 
-    </div>
+    <!-- NUMBER LEARNING GAME -->
 
-</section>
+    <section class="number-game" id="numberGame" style="display:none;">
+
+        <h2>🔢 Number Learning Adventure</h2>
+
+        <div class="number-box">
+
+            <div class="big-number" id="numberDisplay">1</div>
+
+            <h3 id="numberWord">One</h3>
+
+            <p id="numberHint">Count and Learn!</p>
+
+            <button onclick="speakNumber()">🔊 Listen</button>
+
+            <div class="number-controls">
+                <button onclick="previousNumber()">⬅ Previous</button>
+                <button onclick="nextNumber()">Next ➡</button>
+            </div>
+
+            <p id="numberProgress">Number 1 of 20</p>
+
+        </div>
+
+    </section>
+
+    
+
+    <!-- MATH CHALLENGE GAME -->
+
+    <section class="math-game" id="mathChallenge" style="display:none;">
+
+        <h2>🧮 Math Challenge Arena</h2>
+
+        <p>Think Fast, Solve Smart!</p>
+
+        <div class="math-box">
+
+            <div class="math-info">
+                <span>⭐ Score: <b id="mathScore">0</b></span>
+                <span>🪙 Coins: <b id="mathCoins">0</b></span>
+                <span>⏱️ Time: <b id="mathTimer">30</b>s</span>
+            </div>
+
+            <h3>Select Difficulty</h3>
+
+            <div class="math-levels">
+                <button onclick="startMath('easy')">Easy 😊</button>
+                <button onclick="startMath('medium')">Medium 😎</button>
+                <button onclick="startMath('hard')">Hard 🔥</button>
+            </div>
+
+            <div id="mathPlayArea" style="display:none;">
+
+                <div class="math-question" id="mathQuestion">
+                    5 + 3 = ?
+                </div>
+
+                <div class="math-options" id="mathOptions"></div>
+
+                <p id="mathFeedback"></p>
+
+            </div>
+
+            <button onclick="startMath('easy')">
+                🔄 Restart Game
+            </button>
+
+        </div>
+
+    </section>
 
 
 
@@ -179,4 +233,5 @@
     <script src="script.js"></script>
 
 </body>
+
 </html>

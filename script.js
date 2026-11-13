@@ -90,21 +90,45 @@ function speakLetter() {
 
 // ===== OPEN GAME =====
 
+
 function openGame(gameName) {
 
+    // Sabhi game screens ko hide karo
+    document.getElementById("abcGame").style.display = "none";
+    document.getElementById("numberGame").style.display = "none";
+    document.getElementById("mathChallenge").style.display = "none";
+
+    // Selected game open karo
     if (gameName === "abc") {
 
         document.getElementById("abcGame").style.display = "block";
-
-        document.getElementById("abcGame").scrollIntoView({
-            behavior: "smooth"
-        });
-
         showLetter();
-    } else {
-        alert("This game is coming soon! 🚀");
+
+    } 
+    else if (gameName === "math") {
+
+        document.getElementById("numberGame").style.display = "block";
+
+    } 
+    else if (gameName === "challenge") {
+
+        document.getElementById("mathChallenge").style.display = "block";
+
     }
+
+    // Game screen par scroll karo
+    const gameIds = {
+        abc: "abcGame",
+        math: "numberGame",
+        challenge: "mathChallenge"
+    };
+
+    document.getElementById(gameIds[gameName]).scrollIntoView({
+        behavior: "smooth"
+    });
+
 }
+
 
 // ===== START LEARNING =====
 
@@ -322,3 +346,137 @@ openGame = function(gameName) {
 
     }
 };
+
+// ===== MATH CHALLENGE GAME =====
+
+let mathScore = 0;
+let mathCoins = 0;
+let mathTime = 30;
+let mathTimerInterval;
+let correctMathAnswer = 0;
+
+function startMath(level) {
+
+    clearInterval(mathTimerInterval);
+
+    mathScore = 0;
+    mathTime = 30;
+
+    document.getElementById("mathScore").innerText = mathScore;
+    document.getElementById("mathTimer").innerText = mathTime;
+
+    document.getElementById("mathPlayArea").style.display = "block";
+    document.getElementById("mathQuestion").style.display = "block";
+    document.getElementById("mathOptions").style.display = "grid";
+    document.getElementById("mathFeedback").innerText = "";
+
+    generateMathQuestion(level);
+
+    mathTimerInterval = setInterval(function () {
+
+        mathTime--;
+
+        document.getElementById("mathTimer").innerText = mathTime;
+
+        if (mathTime <= 0) {
+            clearInterval(mathTimerInterval);
+            document.getElementById("mathFeedback").innerText =
+                "⏰ Time Up! Final Score: " + mathScore;
+            document.getElementById("mathQuestion").style.display = "none";
+            document.getElementById("mathOptions").style.display = "none";
+        }
+
+    }, 1000);
+}
+
+
+function generateMathQuestion(level) {
+
+    let a, b, operator;
+
+    // EASY LEVEL
+    if (level === "easy") {
+        a = Math.floor(Math.random() * 10) + 1;
+        b = Math.floor(Math.random() * 10) + 1;
+
+        operator = Math.random() < 0.5 ? "+" : "-";
+    }
+
+    // MEDIUM LEVEL
+    else if (level === "medium") {
+        a = Math.floor(Math.random() * 20) + 1;
+        b = Math.floor(Math.random() * 12) + 1;
+
+        let operators = ["+", "-", "×"];
+        operator = operators[Math.floor(Math.random() * 3)];
+    }
+
+    // HARD LEVEL
+    else if (level === "hard") {
+
+        let operators = ["+", "-", "×", "÷"];
+        operator = operators[Math.floor(Math.random() * 4)];
+
+        if (operator === "÷") {
+            b = Math.floor(Math.random() * 10) + 1;
+            correctMathAnswer = Math.floor(Math.random() * 10) + 1;
+            a = b * correctMathAnswer;
+        } else {
+            a = Math.floor(Math.random() * 50) + 1;
+            b = Math.floor(Math.random() * 20) + 1;
+        }
+    }
+
+    if (operator === "-" && b > a) {
+        [a, b] = [b, a];
+    }
+
+    if (operator === "+") correctMathAnswer = a + b;
+    if (operator === "-") correctMathAnswer = a - b;
+    if (operator === "×") correctMathAnswer = a * b;
+    if (operator === "÷") correctMathAnswer = a / b;
+
+    document.getElementById("mathQuestion").innerText =
+        a + " " + operator + " " + b + " = ?";
+
+    let answers = new Set([correctMathAnswer]);
+
+    while (answers.size < 4) {
+        let wrong = correctMathAnswer +
+            Math.floor(Math.random() * 11) - 5;
+
+        if (wrong >= 0 && wrong !== correctMathAnswer) {
+            answers.add(wrong);
+        }
+    }
+
+    let options = [...answers].sort(() => Math.random() - 0.5);
+
+    document.getElementById("mathOptions").innerHTML =
+        options.map(answer =>
+            `<button onclick="checkMathAnswer(${answer}, '${level}')">
+                ${answer}
+            </button>`
+        ).join("");
+}
+
+function checkMathAnswer(answer, level) {
+    if (mathTime <= 0) return;
+
+    if (answer === correctMathAnswer) {
+        mathScore += 10;
+        mathCoins += 5;
+
+        document.getElementById("mathFeedback").innerText =
+            "🎉 Correct Answer! +10 Score, +5 Coins";
+    } else {
+        document.getElementById("mathFeedback").innerText =
+            "❌ Wrong Answer! Correct Answer: " + correctMathAnswer;
+    }
+
+    document.getElementById("mathScore").innerText = mathScore;
+    document.getElementById("mathCoins").innerText = mathCoins;
+
+    generateMathQuestion(level);
+}
+

@@ -621,3 +621,141 @@ footer {
     }
 
 }
+
+/* ===== MATH CHALLENGE DESIGN ===== */
+
+.math-game {
+    padding: 50px 6%;
+    text-align: center;
+    background: linear-gradient(135deg, #e0c3fc, #8ec5fc);
+    min-height: 500px;
+}
+
+.math-game h2 {
+    font-size: 35px;
+    color: #30205e;
+    margin-bottom: 10px;
+}
+
+.math-game > p {
+    font-size: 18px;
+    color: #444;
+}
+
+.math-box {
+    max-width: 750px;
+    margin: 30px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.math-info {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.math-info span {
+    background: #f1edff;
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-weight: bold;
+    color: #49318b;
+}
+
+.math-levels {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 25px 0;
+}
+
+.math-levels button {
+    padding: 14px 25px;
+    border: none;
+    border-radius: 12px;
+    background: #7045d6;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.math-levels button:hover {
+    background: #4b25a5;
+    transform: translateY(-3px);
+}
+
+.math-question {
+    font-size: 42px;
+    font-weight: bold;
+    color: #ff7b22;
+    margin: 30px 0;
+}
+
+.math-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.math-options button {
+    padding: 18px;
+    border: 2px solid #7045d6;
+    border-radius: 15px;
+    background: #f5f0ff;
+    font-size: 23px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.math-options button:hover {
+    background: #7045d6;
+    color: white;
+}
+
+#mathFeedback {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+/* MOBILE RESPONSIVE */
+
+@media (max-width: 600px) {
+
+    .math-game {
+        padding: 30px 15px;
+    }
+
+    .math-game h2 {
+        font-size: 26px;
+    }
+
+    .math-box {
+        padding: 18px;
+    }
+
+    .math-info {
+        gap: 8px;
+    }
+
+    .math-info span {
+        padding: 9px;
+        font-size: 13px;
+    }
+
+    .math-question {
+        font-size: 32px;
+    }
+
+    .math-options button {
+        padding: 14px;
+        font-size: 19px;
+    }
+}
