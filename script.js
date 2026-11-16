@@ -97,6 +97,7 @@ function openGame(gameName) {
     document.getElementById("abcGame").style.display = "none";
     document.getElementById("numberGame").style.display = "none";
     document.getElementById("mathChallenge").style.display = "none";
+    document.getElementById("puzzleGame").style.display = "none";
 
     // Selected game open karo
     if (gameName === "abc") {
@@ -115,12 +116,17 @@ function openGame(gameName) {
         document.getElementById("mathChallenge").style.display = "block";
 
     }
+    else if (gameName === "puzzle") {
+    document.getElementById("puzzleGame").style.display = "block";
+    loadPuzzle();
+    }
 
     // Game screen par scroll karo
     const gameIds = {
         abc: "abcGame",
         math: "numberGame",
-        challenge: "mathChallenge"
+        challenge: "mathChallenge",
+        puzzle: "puzzleGame"
     };
 
     document.getElementById(gameIds[gameName]).scrollIntoView({
@@ -480,3 +486,180 @@ function checkMathAnswer(answer, level) {
     generateMathQuestion(level);
 }
 
+// ===== BRAIN PUZZLE GAME =====
+
+let puzzleScore = 0;
+let puzzleIndex = 0;
+
+const puzzleQuestions = [
+    {
+        question: "Which animal is known as the King of Jungle?",
+        options: ["Tiger", "Lion", "Elephant", "Bear"],
+        answer: "Lion"
+    },
+    {
+        question: "How many days are there in a week?",
+        options: ["5", "6", "7", "8"],
+        answer: "7"
+    },
+    {
+        question: "What comes after 10?",
+        options: ["9", "11", "12", "13"],
+        answer: "11"
+    },
+    {
+        question: "Which planet is known as the Red Planet?",
+        options: ["Earth", "Mars", "Jupiter", "Venus"],
+        answer: "Mars"
+    }
+];
+
+function loadPuzzle() {
+    let q = puzzleQuestions[puzzleIndex];
+
+    document.getElementById("puzzleQuestion").innerText = q.question;
+    document.getElementById("puzzleFeedback").innerText = "";
+
+    let container = document.getElementById("puzzleOptions");
+    container.innerHTML = "";
+
+    q.options.forEach(option => {
+        let button = document.createElement("button");
+        button.innerText = option;
+
+        button.onclick = function () {
+            checkPuzzleAnswer(option, button);
+        };
+
+        container.appendChild(button);
+    });
+}
+
+function checkPuzzleAnswer(answer, button) {
+    let correct = puzzleQuestions[puzzleIndex].answer;
+
+    if (answer === correct) {
+        puzzleScore += 10;
+        document.getElementById("puzzleFeedback").innerText = "🎉 Correct! +10 Points";
+    } else {
+        document.getElementById("puzzleFeedback").innerText =
+            "❌ Wrong! Correct Answer: " + correct;
+    }
+
+    document.getElementById("puzzleScore").innerText = puzzleScore;
+
+    document.querySelectorAll("#puzzleOptions button").forEach(btn => {
+        btn.disabled = true;
+    });
+}
+
+function nextPuzzle() {
+    puzzleIndex++;
+
+    if (puzzleIndex >= puzzleQuestions.length) {
+        puzzleIndex = 0;
+    }
+
+    loadPuzzle();
+}
+// ===== QUIZ BATTLE GAME =====
+
+let battleScore = 0;
+let battleIndex = 0;
+let battleAnswered = false;
+
+const battleQuestions = [
+    {
+        question: "What is the capital of India?",
+        options: ["Mumbai", "Delhi", "Kolkata", "Chennai"],
+        answer: "Delhi"
+    },
+    {
+        question: "How many days are there in a week?",
+        options: ["5", "6", "7", "8"],
+        answer: "7"
+    },
+    {
+        question: "Which planet is known as the Red Planet?",
+        options: ["Earth", "Mars", "Jupiter", "Venus"],
+        answer: "Mars"
+    },
+    {
+        question: "How many colours are there in a rainbow?",
+        options: ["5", "6", "7", "8"],
+        answer: "7"
+    },
+    {
+        question: "Which animal is the largest on Earth?",
+        options: ["Elephant", "Giraffe", "Blue Whale", "Lion"],
+        answer: "Blue Whale"
+    }
+];
+
+function loadBattleQuestion() {
+
+    battleAnswered = false;
+
+    let q = battleQuestions[battleIndex];
+
+    document.getElementById("battleQuestion").innerText = q.question;
+
+    document.getElementById("battleFeedback").innerText = "";
+
+    let container = document.getElementById("battleOptions");
+    container.innerHTML = "";
+
+    q.options.forEach(option => {
+
+        let button = document.createElement("button");
+
+        button.innerText = option;
+
+        button.onclick = function () {
+            checkBattleAnswer(option);
+        };
+
+        container.appendChild(button);
+
+    });
+}
+
+function checkBattleAnswer(answer) {
+
+    if (battleAnswered) return;
+
+    battleAnswered = true;
+
+    let correct = battleQuestions[battleIndex].answer;
+
+    if (answer === correct) {
+
+        battleScore += 10;
+
+        document.getElementById("battleFeedback").innerText =
+            "🎉 Correct Answer! +10 Points";
+
+    } else {
+
+        document.getElementById("battleFeedback").innerText =
+            "❌ Wrong Answer! Correct: " + correct;
+
+    }
+
+    document.getElementById("battleScore").innerText = battleScore;
+
+    document.querySelectorAll("#battleOptions button").forEach(button => {
+        button.disabled = true;
+    });
+}
+
+function nextBattleQuestion() {
+
+    battleIndex++;
+
+    if (battleIndex >= battleQuestions.length) {
+        battleIndex = 0;
+    }
+
+    loadBattleQuestion();
+}
